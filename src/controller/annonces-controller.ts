@@ -6,6 +6,11 @@ import { checkId } from "../middleware";
 export const annoncesController = Router();
 
 annoncesController.get('/api/annonces', async (req,res) => {
+    if (req.query.chose) {
+        const annonces = await annoncesRepository.findByChose(req.query.chose);
+        res.json(annonces);
+        return;
+    }
     const annonces = await annoncesRepository.findAll();
     res.json(annonces);
 });
@@ -18,18 +23,7 @@ annoncesController.get('/api/annonces/:id',checkId, async (req,res) => {
     }
     res.json(annonces);
 });
-annoncesController.get('/api/annoncesByAddress', async (req,res) => {
-    const annonces = await annoncesRepository.findByAddress(req.body.address);
-    res.json(annonces);
-});
-annoncesController.get('/api/annoncesByType', async (req,res) => {
-    const annonces = await annoncesRepository.findByType(req.body.type);
-    res.json(annonces);
-});
-annoncesController.get('/api/annoncesByTerm', async (req,res) => {
-    const annonces = await annoncesRepository.findByTerm(req.body.term);
-    res.json(annonces);
-});
+
 
 // Insert un User dans la bdd
 annoncesController.post('/api/annonces',async(req,res)=>{

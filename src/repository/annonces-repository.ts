@@ -13,14 +13,16 @@ export const annoncesRepository={
     findById(_id:string){
         return collection.findOne(new ObjectId(_id));
     },
-    findByAddress(adres:string){
-        return collection.find({address:adres}).toArray();
-    },
-    findByType(type:string){
-        return collection.find({type:type}).toArray();
-    },
-    findByTerm(term:string){
-        return collection.find({name:{$regex:`${term}`}}).toArray();
+    findByChose(chose:any){
+        return collection.find({
+            $or:[
+                {name:{$regex:`${chose}`}},
+                {type:{$regex:chose}},
+                {owner:{
+                    address:{$regex:chose}
+                }},
+            ]
+        }).toArray();
     },
     async insert(annonces:Annonces) {
         const result= await collection.insertOne(annonces);
