@@ -15,6 +15,11 @@ userController.get('/api/OneUser/:name', async (req,res) => {
     res.json(user);
     return;
 });
+userController.get('/api/user/:id', async (req,res) => {
+    const user = await userRepository.findByName(req.params.id);
+    res.json(user);
+    return;
+});
 // Insert un User dans la bdd
 userController.post('/api/user',async(req,res)=>{
 
