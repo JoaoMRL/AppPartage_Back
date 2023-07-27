@@ -15,7 +15,6 @@ export const userRepository = {
         return collection.findOne(new ObjectId(_id));
 
     },
-    
     async insert(user:User){
         const result = await collection.insertOne(user);
         user._id=result.insertedId;
