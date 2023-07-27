@@ -6,14 +6,13 @@ import { checkId } from "../middleware";
 export const annoncesController = Router();
 
 annoncesController.get('/api/annonces', async (req,res) => {
-    if (req.body.search) {
-        const annonces = await annoncesRepository.findByChose(req.body.search);
-        res.json(annonces);
-        return;
-    }
     const annonces = await annoncesRepository.findAll();
     res.json(annonces);
 });
+annoncesController.post('/api/annoncesSearch',async (req,res)=>{
+    const annonces = await annoncesRepository.findByChose(req.body.search);
+    res.json(annonces);
+})
 annoncesController.get('/api/annonces/:id',checkId, async (req,res) => {
     
     const annonces = await annoncesRepository.findById(req.params.id);
