@@ -10,6 +10,12 @@ export const userController = Router();
 userController.get('/api/user', async (req,res) => {
     const user = await userRepository.findAll();
     res.json(user);
+    return;
+});
+userController.get('/api/OneUser', async (req,res) => {
+    const user = await userRepository.findByName(req.body.name);
+    res.json(user);
+    return;
 });
 // Insert un User dans la bdd
 userController.post('/api/user',async(req,res)=>{
