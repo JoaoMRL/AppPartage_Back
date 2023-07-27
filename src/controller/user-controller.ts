@@ -7,7 +7,10 @@ import { checkId } from "../middleware";
 // import passport from "passport";
 
 export const userController = Router();
-
+userController.get('/api/user', async (req,res) => {
+    const user = await userRepository.findAll();
+    res.json(user);
+});
 // Insert un User dans la bdd
 userController.post('/api/user',async(req,res)=>{
 
@@ -18,10 +21,15 @@ userController.post('/api/user',async(req,res)=>{
         return;
     }
     //Si un user est déja présent
-    if(await userRepository.findByEmail(req.body.email)){
+    if(await userRepository.findByName(req.body.name)){
         res.status(400).json({error:'User AlreadyExist'});
         return;
     }
+
+    // if(await userRepository.findByEmail(req.body.email)){
+    //     res.status(400).json({error:'User AlreadyExist'});
+    //     return;
+    // }
 
     req.body.role='ROLE_USER';
     req.body.password=await bcrypt.hash(req.body.password,10);

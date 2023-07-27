@@ -5,8 +5,11 @@ import { connection } from "./connection";
 const collection = connection.db('projetPartage').collection<User>('user');
 
 export const userRepository = {
-    findByEmail(email:string){
-        return collection.findOne({email});
+    findAll(){
+        return collection.find().toArray();
+    },
+    findByName(name:string){
+        return collection.findOne({name});
     },
     async insert(user:User){
         const result = await collection.insertOne(user);
