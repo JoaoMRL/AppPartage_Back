@@ -20,7 +20,7 @@ export const annoncesRepository={
         return collection.find({type:type}).toArray();
     },
     findByTerm(term:string){
-        return collection.find({name:{$regex:term}}).toArray();
+        return collection.find({name:{$regex:`${term}`}}).toArray();
     },
     async insert(annonces:Annonces) {
         const result= await collection.insertOne(annonces);
