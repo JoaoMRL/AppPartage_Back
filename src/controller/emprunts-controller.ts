@@ -9,7 +9,6 @@ empruntsController.get('/api/emprunts', async (req,res) => {
     const annonces = await empruntsRepository.findAll();
     res.json(annonces);
 });
-
 empruntsController.get('/api/emprunts/:id',checkId, async (req,res) => {
     
     const emprunts = await empruntsRepository.findById(req.params.id);
