@@ -9,7 +9,15 @@ annoncesController.get('/api/annonces', async (req,res) => {
     const annonces = await annoncesRepository.findAll();
     res.json(annonces);
 });
-
+annoncesController.get('/api/annonces/:id',checkId, async (req,res) => {
+    
+    const annonces = await annoncesRepository.findById(req.params.id);
+    if(!annonces) {
+        res.status(404).end('Not Found');
+        return;
+    }
+    res.json(annonces);
+});
 annoncesController.get('/api/annoncesByAddress', async (req,res) => {
     const annonces = await annoncesRepository.findByAddress(req.body.address);
     res.json(annonces);
