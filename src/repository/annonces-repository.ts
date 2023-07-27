@@ -13,13 +13,13 @@ export const annoncesRepository={
     findById(_id:string){
         return collection.findOne(new ObjectId(_id));
     },
-    findByChose(chose:any){
+    findByChose(search:any){
         return collection.find({
             $or:[
-                {name:{$regex:`${chose}`}},
-                {type:{$regex:chose}},
+                {name:{$regex:`${search}`}},
+                {type:{$regex:search}},
                 {owner:{
-                    address:{$regex:chose}
+                    address:{$regex:search}
                 }},
             ]
         }).toArray();

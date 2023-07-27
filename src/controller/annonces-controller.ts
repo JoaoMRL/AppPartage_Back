@@ -6,8 +6,8 @@ import { checkId } from "../middleware";
 export const annoncesController = Router();
 
 annoncesController.get('/api/annonces', async (req,res) => {
-    if (req.query.chose) {
-        const annonces = await annoncesRepository.findByChose(req.query.chose);
+    if (req.body.search) {
+        const annonces = await annoncesRepository.findByChose(req.body.search);
         res.json(annonces);
         return;
     }
