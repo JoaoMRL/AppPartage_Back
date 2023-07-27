@@ -1,10 +1,8 @@
 import { Router } from "express";
 import Joi from "joi";
 import bcrypt from 'bcrypt';
-// import {sign} from 'jsonwebtoken';
 import {userRepository} from '../repository/user-repository';
 import { checkId } from "../middleware";
-// import passport from "passport";
 
 export const userController = Router();
 userController.get('/api/user', async (req,res) => {
@@ -12,8 +10,8 @@ userController.get('/api/user', async (req,res) => {
     res.json(user);
     return;
 });
-userController.get('/api/OneUser', async (req,res) => {
-    const user = await userRepository.findByName(req.body.name);
+userController.get('/api/OneUser/:name', async (req,res) => {
+    const user = await userRepository.findByName(req.params.name);
     res.json(user);
     return;
 });
@@ -31,43 +29,11 @@ userController.post('/api/user',async(req,res)=>{
         res.status(400).json({error:'User AlreadyExist'});
         return;
     }
-
-    // if(await userRepository.findByEmail(req.body.email)){
-    //     res.status(400).json({error:'User AlreadyExist'});
-    //     return;
-    // }
-
     req.body.role='ROLE_USER';
     req.body.password=await bcrypt.hash(req.body.password,10);
     const user = await userRepository.insert(req.body);
     res.status(201).json(user);
 });
-
-//Le User se login
-// userController.post('/api/loginUser',async(req,res)=>{
-
-//     const validation = userValidation.validate(req.body,{abortEarly:false});
-//     //Si la req du body ne correspond pas a ce qu'on attend
-//     if (validation.error) {
-//         res.status(400).json(validation.error);
-//         return;
-//     }
-
-//     const user = await userRepository.findByEmail(req.body.email);
-//     if (!user) {
-//         res.status(401).json({error:'No user with this email'});
-//         return;
-//     }
-    
-//     const passwordCheck=await bcrypt.compare(req.body.password, user.password);
-//     if (!passwordCheck) {
-//         res.status(401).json({error:'Password Error'});
-//         return;
-//     }
-    
-//     const token = sign(user, process.env.JWT_SECRET!);
-//     res.json({token});
-// });
 
 userController.delete('/user/:id',checkId, async(req,res)=>{
     await userRepository.remove(req.params.id);
