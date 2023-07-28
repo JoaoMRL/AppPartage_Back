@@ -35,6 +35,10 @@ annoncesController.post('/api/annonces',async(req,res)=>{
     res.status(201).json(annonces);
 });
 
+annoncesController.delete('/api/annonces/:id',checkId, async(req,res)=>{
+    await annoncesRepository.remove(req.params.id);
+    res.status(204).end();
+})
 annoncesController.patch('/api/annonces/:id', checkId, async (req,res)=> {
     const validation = annoncesPatchValidation.validate(req.body, {abortEarly:false});
     if(validation.error) {
@@ -50,7 +54,8 @@ const annoncesValidation = Joi.object({
     msg:Joi.string(),
     owner: Joi.object({
         _id: Joi.string().required(),
-        name: Joi.string().required()
+        name: Joi.string().required(),
+        address:Joi.string().required()
     }).required(),
     status:Joi.boolean()
 });

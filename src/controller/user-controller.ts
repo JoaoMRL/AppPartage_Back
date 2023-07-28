@@ -65,8 +65,8 @@ userController.patch('/user/:id',checkId,async (req,res) => {
 const userValidation = Joi.object({
     name:Joi.string().required(),
     firstName:Joi.string(),
-    address:Joi.string().required(),
-    email:Joi.string().email().required(),
+    address:Joi.string(),
+    email:Joi.string().email(),
     password:Joi.string().min(7).required()
 });
 const userPatchValidation = Joi.object({

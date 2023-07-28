@@ -24,8 +24,8 @@ export interface Annonces{
 export interface Emprunts{
     _id?:any;
     status:string;
-    dateDebut:Date;
-    dateFin:Date;
+    dateDebut:string;
+    dateFin:string;
     msgEmprunts:string;
     emObjet:{
         _id:any;
