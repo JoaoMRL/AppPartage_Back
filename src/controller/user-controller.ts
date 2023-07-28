@@ -67,7 +67,7 @@ const userValidation = Joi.object({
     firstName:Joi.string(),
     address:Joi.string(),
     email:Joi.string().email(),
-    password:Joi.string().min(7).required()
+    password:Joi.string().min(7)
 });
 const userPatchValidation = Joi.object({
     name:Joi.string(),
